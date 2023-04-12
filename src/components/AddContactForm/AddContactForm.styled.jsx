@@ -2,12 +2,13 @@ import styled from '@emotion/styled';
 import { Field } from 'formik';
 
 export const StyledLabel = styled.label`
-  margin: 0 30px 40px;
+  display: block;
+  margin-left: 30px;
 `;
 
 export const StyledInput = styled(Field)`
   display: block;
-  margin: 0 30px 40px;
+  margin: 10px 0px 40px;
   padding: 3px 10px;
   width: 250px;
   height: 20px;

@@ -69,7 +69,7 @@ const AddContactForm = ({ addContact }) => {
           <ErrorForm name="name" />
         </StyledLabel>
 
-        <label htmlFor="number">
+        <StyledLabel htmlFor="number">
           Number:
           <StyledInput
             type="tel"
@@ -77,7 +77,7 @@ const AddContactForm = ({ addContact }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
           <ErrorForm name="number" />
-        </label>
+        </StyledLabel>
         <StyledButton type="submit">Add contact</StyledButton>
       </Form>
     </Formik>
