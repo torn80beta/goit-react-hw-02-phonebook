@@ -1,10 +1,16 @@
 import React from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
-import { StyledInput, StyledErrorText } from './AddContactForm.styled';
+import {
+  StyledInput,
+  StyledErrorText,
+  StyledButton,
+  StyledLabel,
+} from './AddContactForm.styled';
 import * as yup from 'yup';
 
 const initialValues = {
   name: '',
+  number: '',
 };
 
 const schema = yup.object().shape({
@@ -15,6 +21,19 @@ const schema = yup.object().shape({
     .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
       excludeEmptyString: false,
     }),
+  number: yup
+    .string()
+    .required()
+    .min(13)
+    .max(13)
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      {
+        message:
+          'Number must contain only numbers from "0" to "9" and "+" or "-" symbols.',
+        excludeEmptyString: false,
+      }
+    ),
 });
 
 const ErrorForm = ({ name }) => {
@@ -26,9 +45,10 @@ const ErrorForm = ({ name }) => {
   );
 };
 
-const AddContactForm = () => {
+const AddContactForm = ({ addContact }) => {
   const handleNameSubmit = (values, { resetForm }) => {
-    console.log(values);
+    addContact(values);
+    // console.log(values);
     resetForm();
   };
 
@@ -39,18 +59,26 @@ const AddContactForm = () => {
       onSubmit={handleNameSubmit}
     >
       <Form>
-        <label htmlFor="name">
+        <StyledLabel htmlFor="name">
           Name:
           <StyledInput
             type="text"
             name="name"
-            // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            // required
           />
-          <button type="submit">Submit</button>
           <ErrorForm name="name" />
+        </StyledLabel>
+
+        <label htmlFor="number">
+          Number:
+          <StyledInput
+            type="tel"
+            name="number"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          />
+          <ErrorForm name="number" />
         </label>
+        <StyledButton type="submit">Add contact</StyledButton>
       </Form>
     </Formik>
   );
