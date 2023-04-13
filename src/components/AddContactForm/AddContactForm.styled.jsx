@@ -25,7 +25,7 @@ export const StyledInput = styled(Field)`
 
 export const StyledErrorText = styled.p`
   position: absolute;
-  top: 45px;
+  top: 65px;
   font-size: 16px;
   color: red;
 `;
