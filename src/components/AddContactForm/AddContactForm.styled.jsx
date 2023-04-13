@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Field } from 'formik';
 
 export const StyledLabel = styled.label`
+  position: relative;
   display: block;
   margin-left: 30px;
 `;
@@ -23,8 +24,9 @@ export const StyledInput = styled(Field)`
 `;
 
 export const StyledErrorText = styled.p`
-  margin-left: 30px;
-  font-size: 18px;
+  position: absolute;
+  top: 45px;
+  font-size: 16px;
   color: red;
 `;
 

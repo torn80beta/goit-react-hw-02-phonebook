@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Formik, Form, ErrorMessage } from 'formik';
 import {
   StyledInput,
@@ -16,16 +17,17 @@ const initialValues = {
 const schema = yup.object().shape({
   name: yup
     .string()
-    .required()
-    .min(2)
+    .required('Name is a required field.')
+    .min(2, 'Name must be at least 13 characters.')
     .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
+      message: 'Name must match the following: "a-z, A-Z, а-я, А-Я".',
       excludeEmptyString: false,
     }),
   number: yup
     .string()
-    .required()
-    .min(13)
-    .max(13)
+    .required('Number is a required field.')
+    .min(13, 'Number must be at least 13 characters.')
+    .max(13, 'Number must be at most 13 characters.')
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
       {
@@ -47,9 +49,17 @@ const ErrorForm = ({ name }) => {
 
 const AddContactForm = ({ addContact }) => {
   const handleNameSubmit = (values, { resetForm }) => {
-    addContact(values);
     // console.log(values);
+    addContact(values);
     resetForm();
+  };
+
+  handleNameSubmit.propTypes = {
+    values: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired,
+    resetForm: PropTypes.func.isRequired,
   };
 
   return (
@@ -85,3 +95,16 @@ const AddContactForm = ({ addContact }) => {
 };
 
 export default AddContactForm;
+
+ErrorForm.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+AddContactForm.propTypes = {
+  addContact: PropTypes.func.isRequired,
+};
+
+initialValues.propTypes = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+};

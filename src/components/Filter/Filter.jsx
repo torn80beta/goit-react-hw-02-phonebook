@@ -1,19 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { StyledSectionFilter, StyledFilterInput } from './Filter.styled';
 
 const Filter = ({ onChange }) => {
   //   console.log(onChange);
   return (
-    <>
+    <StyledSectionFilter>
       <p>Find contacts by name</p>
-      <input
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        onChange={onChange}
-      />
-    </>
+      <StyledFilterInput type="text" name="filter" onChange={onChange} />
+    </StyledSectionFilter>
   );
 };
 
 export default Filter;
+
+Filter.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};

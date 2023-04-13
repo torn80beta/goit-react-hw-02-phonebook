@@ -1,4 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  StyledDeleteContactButton,
+  StyledContactListItemLi,
+  StyledContactsListUL,
+} from './Contacts.styled';
 
 export const Contacts = ({ contacts, filter, onDeleteContact }) => {
   // console.log(filter);
@@ -6,15 +12,29 @@ export const Contacts = ({ contacts, filter, onDeleteContact }) => {
     name.toLowerCase().includes(filter.toLowerCase())
   );
   return (
-    <ul>
+    <StyledContactsListUL>
       {filteredContacts.map(({ id, name, number }) => (
-        <li key={id}>
+        <StyledContactListItemLi key={id}>
           <p>
             {name}: {number}
           </p>
-          <button onClick={() => onDeleteContact(id)}>Delete</button>
-        </li>
+          <StyledDeleteContactButton onClick={() => onDeleteContact(id)}>
+            Delete
+          </StyledDeleteContactButton>
+        </StyledContactListItemLi>
       ))}
-    </ul>
+    </StyledContactsListUL>
   );
+};
+
+Contacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  filter: PropTypes.string.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
 };

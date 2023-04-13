@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { Title } from './Title/Title';
 import { Contacts } from './Contacts/Contacts';
 import Filter from './Filter/Filter';
+// import PropTypes from 'prop-types';
 const { Component } = require('react');
 
 class App extends Component {
