@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Contacts = ({ contacts, filter }) => {
+export const Contacts = ({ contacts, filter, onDeleteContact }) => {
   // console.log(filter);
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
@@ -9,7 +9,10 @@ export const Contacts = ({ contacts, filter }) => {
     <ul>
       {filteredContacts.map(({ id, name, number }) => (
         <li key={id}>
-          {name}: {number}
+          <p>
+            {name}: {number}
+          </p>
+          <button onClick={() => onDeleteContact(id)}>Delete</button>
         </li>
       ))}
     </ul>

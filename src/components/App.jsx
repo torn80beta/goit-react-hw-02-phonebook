@@ -13,16 +13,25 @@ class App extends Component {
       { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
       { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
     ],
-    // name: '',
-    // number: '',
     filter: '',
   };
 
+  checkContact = (arr, newName) => {
+    return arr.some(({ name }) => {
+      // console.log(name);
+      return newName.toLowerCase() === name.toLowerCase();
+    });
+  };
+
   handleAddContact = ({ name, number }) => {
+    const check = this.checkContact(this.state.contacts, name);
+    // console.log(check);
+    if (check) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
     this.setState(
       prevState => ({
-        // name: name,
-        // number: number,
         contacts: [
           ...prevState.contacts,
           { id: nanoid(), name: name, number: number },
@@ -30,6 +39,12 @@ class App extends Component {
       })
       // () => console.log(this.state.contacts)
     );
+  };
+
+  handleDeleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   handleFilterChange = event => {
@@ -46,7 +61,11 @@ class App extends Component {
         <AddContactForm addContact={this.handleAddContact} />
         <Title title={'Contacts'} />
         <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-        <Contacts contacts={this.state.contacts} filter={this.state.filter} />
+        <Contacts
+          contacts={this.state.contacts}
+          filter={this.state.filter}
+          onDeleteContact={this.handleDeleteContact}
+        />
       </>
     );
   }
