@@ -1,12 +1,14 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 
-export const Contacts = ({ contacts }) => {
-  //   console.log(contacts);
+export const Contacts = ({ contacts, filter }) => {
+  // console.log(filter);
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter.toLowerCase())
+  );
   return (
     <ul>
-      {contacts.map(({ name, number }) => (
-        <li key={nanoid()}>
+      {filteredContacts.map(({ id, name, number }) => (
+        <li key={id}>
           {name}: {number}
         </li>
       ))}
