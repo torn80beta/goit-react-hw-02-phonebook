@@ -55,6 +55,25 @@ class App extends Component {
     );
   };
 
+  localContacts = () => localStorage.getItem('PHONEBOOK_CONTACTS') || [];
+
+  componentDidMount() {
+    if (localStorage.getItem('PHONEBOOK_CONTACTS')) {
+      this.setState(() => ({
+        contacts: JSON.parse(localStorage.getItem('PHONEBOOK_CONTACTS')),
+      }));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem(
+        'PHONEBOOK_CONTACTS',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
+
   render() {
     return (
       <>
